@@ -1,1 +1,5 @@
+Python==3.6.0
 Mezzanine==4.2.3
+Django==1.10.7
+SQLite==3.14.2
+

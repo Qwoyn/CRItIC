@@ -118,20 +118,16 @@
     </div>
 {% endif %}
 {% endnevercache %}
-    <ul class="breadcrumb">
-    {% spaceless %}
-    {% block breadcrumb_menu %}{% page_menu "pages/menus/breadcrumb.html" %}{% endblock %}
-    {% endspaceless %}
-    </ul> 
+
 </div>
     <!-- main page content. the place to put widgets in. usually consists of .row > .col-md-* > .widget.  -->
-    <main id="content" class="top" role="main" style="background-color:white;">
+    <main id="content" class="top" role="main" style="background-image:url(../static/img/background1.jpg);">
         <div class="col-md-3 top">
             <section class="widget">
                 <header>
-                    <h5>
-                        Recent Reports
-                    </h5>
+                    <h3>
+                        <span class="fw-semi-bold">Recent Reports </span>
+                    </h3>
                 </header>
                 <div class="widget-body" style="background-color:#DEDEDE;">
                     <div class="stats-row">

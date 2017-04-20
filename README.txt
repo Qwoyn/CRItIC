@@ -22,3 +22,7 @@ on Gearbox CMU alerts.
      `b.                 .d'     
           ^q........p^
               ''''
+
+
+TODO: Integrate history widget
+      Integrate history search

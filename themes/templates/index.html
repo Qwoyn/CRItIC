@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% load i18n %}
 
-{% block meta_title %}{% trans "Home" %}{% endblock %}
-{% block title %}{% trans "Home" %}{% endblock %}
+{% block meta_title %}{% trans "CMaS" %}{% endblock %}
+{% block title %}{% trans "CMaS" %}{% endblock %}
 
 {% block breadcrumb_menu %}
 <li class="active">{% trans "Home" %}</li>
@@ -11,6 +11,6 @@
 {% block main %}
 {% blocktrans %}
 <!-- Main Website Window includes style="-webkit-transform:scale(1.2);-moz-transform-scale(1.0);" which is a handy way to resize frames -->
-<iframe src="http://cmas.moventas.com" height="600" width="1180" style="-webkit-transform:scale(1.2);-moz-transform-scale(1.0);border:none;"></iframe>
+<iframe src="http://cmas.moventas.com" height="605" width="1150" style="-webkit-transform:scale(1.0);-moz-transform-scale(1.0); background-image:url(../static/img/background1.jpg);" allowtransparency="true"frameborder="0" scrolling="auto" onload="resizeIframe(this)"></iframe>
 {% endblocktrans %}
 {% endblock %}

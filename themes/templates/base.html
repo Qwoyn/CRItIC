@@ -3,10 +3,15 @@
 {% load pages_tags mezzanine_tags i18n staticfiles %}
 
 <head>
+<!-- Meta -->
 <meta http-equiv="Content-type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="keywords" content="{% block meta_keywords %}{% endblock %}">
 <meta name="description" content="{% block meta_description %}{% endblock %}">
+<meta name="author" content="Daniel Pittman">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
 <title>{% block meta_title %}{% endblock %}{% if settings.SITE_TITLE %} | {{ settings.SITE_TITLE }}{% endif %}</title>
 <link rel="shortcut icon" href="{% static "img/favicon.ico" %}">
 
@@ -15,92 +20,148 @@
 <link rel="alternate" type="application/atom+xml" title="Atom" href="{% url "blog_post_feed" "atom" %}">
 {% endifinstalled %}
 
+<!-- CSS files -->
 {% compress css %}
+<!-- sing dashboard -->
+<link rel="stylesheet" href="{% static "css/application.css" %}">
+<!-- required mezzanine -->
 <link rel="stylesheet" href="{% static "css/bootstrap.css" %}">
 <link rel="stylesheet" href="{% static "css/mezzanine.css" %}">
 <link rel="stylesheet" href="{% static "css/bootstrap-theme.css" %}">
 {% if LANGUAGE_BIDI %}
 <link rel="stylesheet" href="{% static "css/bootstrap-rtl.css" %}">
 {% endif %}
-{% ifinstalled cartridge.shop %}
-<link rel="stylesheet" href="{% static "css/cartridge.css" %}">
-{% if LANGUAGE_BIDI %}
-<link rel="stylesheet" href="{% static "css/cartridge.rtl.css" %}">
-{% endif %}
-{% endifinstalled %}
 {% block extra_css %}{% endblock %}
 {% endcompress %}
 
+<!-- JS files -->
 {% compress js %}
+<!-- common libraries. required for every sing page-->
+<script src="{% static "vendor/jquery/dist/jquery.min.js" %}"></script>
+<script src="{% static "vendor/jquery-pjax/jquery.pjax.js" %}"></script>
+<script src="{% static "vendor/bootstrap-sass/assets/javascripts/bootstrap/transition.js" %}"></script>
+<script src="{% static "vendor/bootstrap-sass/assets/javascripts/bootstrap/collapse.js" %}"></script>
+<script src="{% static "vendor/bootstrap-sass/assets/javascripts/bootstrap/dropdown.js" %}"></script>
+<script src="{% static "vendor/bootstrap-sass/assets/javascripts/bootstrap/button.js" %}"></script>
+<script src="{% static "vendor/bootstrap-sass/assets/javascripts/bootstrap/tooltip.js" %}"></script>
+<script src="{% static "vendor/bootstrap-sass/assets/javascripts/bootstrap/alert.js" %}"></script>
+<script src="{% static "vendor/slimScroll/jquery.slimscroll.min.js" %}"></script>
+<script src="{% static "vendor/widgster/widgster.js" %}"></script>
+<script src="{% static "vendor/pace.js/pace.js" data-pace-options='{ "target": ".content-wrap", "ghostTime": 1000 }' %}"></script>
+<script src="{% static "vendor/jquery-touchswipe/jquery.touchSwipe.js" %}"></script>
+<!-- required mezzanine -->
 <script src="{% static "mezzanine/js/"|add:settings.JQUERY_FILENAME %}"></script>
 <script src="{% static "js/bootstrap.js" %}"></script>
 <script src="{% static "js/bootstrap-extras.js" %}"></script>
-{% block extra_js %}{% endblock %}
+{% block extra_js %}
+<!-- page specific libs -->
+<script id="test" src="{% static "vendor/underscore/underscore.js" %}"></script>
+<script src="{% static "vendor/jquery.sparkline/index.js" %}"></script>
+<script src="{% static "vendor/jquery.sparkline/index.js" %}"></script>
+<script src="{% static "vendor/d3/d3.min.js" %}"></script>
+<script src="{% static "vendor/rickshaw/rickshaw.min.js" %}"></script>
+<script src="{% static "vendor/raphael/raphael-min.js" %}"></script>
+<script src="{% static "vendor/jQuery-Mapael/js/jquery.mapael.js" %}"></script>
+<script src="{% static "vendor/jQuery-Mapael/js/maps/usa_states.js" %}"></script>
+<script src="{% static "vendor/jQuery-Mapael/js/maps/world_countries.js" %}"></script>
+<script src="{% static "vendor/bootstrap-sass/assets/javascripts/bootstrap/popover.js" %}"></script>
+<script src="{% static "vendor/bootstrap_calendar/bootstrap_calendar/js/bootstrap_calendar.min.js" %}"></script>
+<script src="{% static "vendor/jquery-animateNumber/jquery.animateNumber.min.js" %}"></script>
+<!-- common app js -->
+<script src="{% static "js/settings.js" %}"></script>
+<script src="{% static "js/app.js" %}"></script>
+<!-- page specific js -->
+<script src="{% static "js/index.js" %}"></script>
+{% endblock %}
 {% endcompress %}
-
-<!--[if lt IE 9]>
-<script src="{% static "js/html5shiv.js" %}"></script>
-<script src="{% static "js/respond.min.js" %}"></script>
-<![endif]-->
-
-{% block extra_head %}{% endblock %}
+{% block extra_head %}
+<!-- for cmas iframe -->
+<script src="{% static "js/iframe-scrolling.js" %}"></script>
+{% endblock %}
 </head>
 
 <body id="{% block body_id %}body{% endblock %}">
 
+
 <div class="navbar navbar-default navbar-fixed-top" role="navigation">
-<div class="container">
-<div class="navbar-header">
-    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-        <span class="sr-only">{% trans "Toggle Navigation" %}</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-    </button>
-    {% block navbar_title %}
-    {% if settings.SITE_TITLE %}<a class="navbar-brand" href="/">{{ settings.SITE_TITLE }}</a>{% endif %}
-    {% if settings.SITE_TAGLINE %}<p class="navbar-text visible-lg">{{ settings.SITE_TAGLINE }}</p>{% endif %}
-    {% endblock%}
-</div>
-<div class="navbar-collapse collapse">
-    {% block navbar_search_form %}{% search_form "all" %}{% endblock %}
-    {% block navbar_dropdown_menu %}{% page_menu "pages/menus/dropdown.html" %}{% endblock%}
-</div>
-</div>
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">{% trans "Toggle Navigation" %}</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        {% block navbar_title %}
+        {% if settings.SITE_TITLE %}<a class="navbar-brand" href="/">{{ settings.SITE_TITLE }}</a>{% endif %}
+        {% if settings.SITE_TAGLINE %}<p class="navbar-text visible-lg">{{ settings.SITE_TAGLINE }}</p>{% endif %}
+        {% endblock%}
+        </div>
+        <div class="navbar-collapse collapse">
+        {% block navbar_search_form %}{% search_form "all" %}{% endblock %}
+        {% block navbar_dropdown_menu %}{% page_menu "pages/menus/dropdown.html" %}{% endblock%}
+        </div>
+    </div>
 </div>
 
 <div class="container">
 
 {% nevercache %}
 {% if messages %}
-<div class="messages">
-{% for message in messages %}
-<div class="alert alert-dismissable alert-{{ message.tags }}" data-alert="alert">
-    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <div class="messages">
+    {% for message in messages %}
+        <div class="alert alert-dismissable alert-{{ message.tags }}" data-alert="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
     {{ message }}
-</div>
-{% endfor %}
-</div>
+        </div>
+    {% endfor %}
+    </div>
 {% endif %}
 {% endnevercache %}
-
-
-
-<ul class="breadcrumb">
-{% spaceless %}
-{% block breadcrumb_menu %}{% page_menu "pages/menus/breadcrumb.html" %}{% endblock %}
-{% endspaceless %}
-</ul>
-
+    <ul class="breadcrumb">
+    {% spaceless %}
+    {% block breadcrumb_menu %}{% page_menu "pages/menus/breadcrumb.html" %}{% endblock %}
+    {% endspaceless %}
+    </ul> 
 </div>
+    <!-- main page content. the place to put widgets in. usually consists of .row > .col-md-* > .widget.  -->
+    <main id="content" class="top" role="main" style="background-color:white;">
+        <div class="col-md-3 top">
+            <section class="widget">
+                <header>
+                    <h5>
+                        Recent Reports
+                    </h5>
+                </header>
+                <div class="widget-body" style="background-color:#DEDEDE;">
+                    <div class="stats-row">
+                        <div class="stat-item">
+                            <h6 class="name">Gearbox (OR)</h6>
+                                <p class="value">4-19-2017</p>
+                        </div>
+                        <div class="stat-item">
+                            <h6 class="name">Gearbox (IR)</h6>
+                            <p class="value">4-19-2017</p>
+                        </div>
+                            <div class="stat-item">
+                                <h6 class="name">Generator (B)</h6>
+                                    <p class="value">4-17-2017</p>
+                            </div>
+                    </div>
+                        <p>
+                        <small><span class="circle bg-warning"><i class="fa fa-plus"></i></span></small>
+                        <span class="fw-semi-bold">3 Recent Reports </span>in the last month
+                        </p>
+                    </div>
+            </section>
+        </div>
+        <div class="row">
+            <div class="col-md-8">
+            {% block main %}
+            {% endblock %}
+            </div>
+        </div>
+    </main>
 
-<div class="container">
-<div class="row">
-
-<div class="col-md-7 middle">
-    {% block main %}{% endblock %}
-</div>
-</div>
-</div>
 </body>
 </html>
